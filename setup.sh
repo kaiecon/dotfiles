@@ -1,10 +1,11 @@
 #!/bin/bash
 
+SCRIPT_DIR=$(cd "$(dirname "$0")" || exit; pwd)
 XDG_CONFIG_HOME=$HOME/.config
 
-[[ ! -d "$XDG_CONFIG_HOME" ]] && mkdir $XDG_CONFIG_HOME
-ln -sf ~/.dotfiles/nvim $XDG_CONFIG_HOME/nvim
-ln -sf ~/.dotfiles/zsh $XDG_CONFIG_HOME/zsh
-ln -sf ~/.dotfiles/tmux $XDG_CONFIG_HOME/tmux
-ln -sf ~/.dotfiles/zsh/.zshenv ~/.zshenv
-ln -sf ~/.dotfiles/nvim/init.vim ~/.vimrc
+[[ -n "$SCRIPT_DIR" ]] && [[ ! -d "$XDG_CONFIG_HOME" ]] && mkdir "$XDG_CONFIG_HOME"
+ln -sf "$SCRIPT_DIR"/nvim "$XDG_CONFIG_HOME"/nvim
+ln -sf "$SCRIPT_DIR"/zsh "$XDG_CONFIG_HOME"/zsh
+ln -sf "$SCRIPT_DIR"/tmux "$XDG_CONFIG_HOME"/tmux
+ln -sf "$SCRIPT_DIR"/zsh/.zshenv ~/.zshenv
+ln -sf "$SCRIPT_DIR"/nvim/init.vim ~/.vimrc
