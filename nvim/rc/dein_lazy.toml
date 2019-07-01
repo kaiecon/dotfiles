@@ -1,51 +1,51 @@
 # originalrepo = on github
 
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-on_i = 1
-on_event = "InsertCharPre"
-hook_source = """
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#auto_complete_delay = 0
-  let g:deoplete#auto_complete_start_length = 1
-  let g:deoplete#enable_camel_case = 0
-  let g:deoplete#enable_ignore_case = 0
-  let g:deoplete#enable_refresh_always = 0
-  let g:deoplete#enable_smart_case = 1
-  let g:deoplete#file#enable_buffer_path = 1
-  let g:deoplete#max_list = 10000
-  set completeopt-=preview
-  let g:deoplete#enable_at_startup = 1
-
-  inoremap <expr><tab> pumvisible() ? "\<C-n>" :
-  \ neosnippet#expandable_or_jumpable() ?
-  \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
-  inoremap <expr><BS>
-  \ deoplete#smart_close_popup()."\<C-h>"
-  inoremap <expr><C-g>     deoplete#undo_completion()
-"""
-
-[[plugins]]
-repo = 'Shougo/neosnippet.vim'
-on_i = 1
-hook_source = '''
-let g:neosnippet#snippets_directory = '~/.vim/snippets'
-" " imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" " smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" " xmap <C-k> <Plug>(neosnippet_expand_target)
-imap <expr><CR> neosnippet#expandable()
-           \ ? "<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "<C-y>" : "<CR>"
-imap <expr><TAB> pumvisible() ? "<C-n>" : neosnippet#jumpable()
-           \ ? "<Plug>(neosnippet_expand_or_jump)" : "<TAB>"
-imap <expr><S-TAB> pumvisible() ? "<C-p>" : neosnippet#jumpable()
-           \ ? "<Plug>(neosnippet_expand_or_jump)" : "<S-TAB>"
-smap <expr><TAB> neosnippet#jumpable() ?
-           \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
-'''
+# [[plugins]]
+# repo = 'Shougo/deoplete.nvim'
+# on_i = 1
+# on_event = "InsertCharPre"
+# hook_source = """
+#   let g:deoplete#enable_at_startup = 1
+#   let g:deoplete#auto_complete_delay = 0
+#   let g:deoplete#auto_complete_start_length = 1
+#   let g:deoplete#enable_camel_case = 0
+#   let g:deoplete#enable_ignore_case = 0
+#   let g:deoplete#enable_refresh_always = 0
+#   let g:deoplete#enable_smart_case = 1
+#   let g:deoplete#file#enable_buffer_path = 1
+#   let g:deoplete#max_list = 10000
+#   set completeopt-=preview
+#   let g:deoplete#enable_at_startup = 1
+#
+#   inoremap <expr><tab> pumvisible() ? "\<C-n>" :
+#   \ neosnippet#expandable_or_jumpable() ?
+#   \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+#   inoremap <expr><BS>
+#   \ deoplete#smart_close_popup()."\<C-h>"
+#   inoremap <expr><C-g>     deoplete#undo_completion()
+# """
+#
+# [[plugins]]
+# repo = 'Shougo/neosnippet.vim'
+# on_i = 1
+# hook_source = '''
+# let g:neosnippet#snippets_directory = '~/.vim/snippets'
+# " " imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+# " " smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+# " " xmap <C-k> <Plug>(neosnippet_expand_target)
+# imap <expr><CR> neosnippet#expandable()
+#            \ ? "<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "<C-y>" : "<CR>"
+# imap <expr><TAB> pumvisible() ? "<C-n>" : neosnippet#jumpable()
+#            \ ? "<Plug>(neosnippet_expand_or_jump)" : "<TAB>"
+# imap <expr><S-TAB> pumvisible() ? "<C-p>" : neosnippet#jumpable()
+#            \ ? "<Plug>(neosnippet_expand_or_jump)" : "<S-TAB>"
+# smap <expr><TAB> neosnippet#jumpable() ?
+#            \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+#
+# if has('conceal')
+#   set conceallevel=2 concealcursor=niv
+# endif
+# '''
 
 [[plugins]]
 repo = 'roxma/nvim-yarp'
@@ -55,12 +55,12 @@ on_source = ['deoplete.nvim']
 repo = 'roxma/vim-hug-neovim-rpc'
 on_source = ['deoplete.nvim']
 
-[[plugins]]
-repo = 'davidhalter/jedi-vim'
-on_ft = 'python'
-hook_add = '''
-  let g:jedi#rename_command = "C-R"
-'''
+# [[plugins]]
+# repo = 'davidhalter/jedi-vim'
+# on_ft = 'python'
+# hook_add = '''
+#   let g:jedi#rename_command = "C-R"
+# '''
 
 # [[plugins]]
 # repo = 'justmao945/vim-clang'
@@ -129,13 +129,13 @@ let g:vimtex_view_general_viewer
 let g:vimtex_view_general_options = '-r @line @pdf @tex'
 '''
 
-[[plugins]]
-repo = 'zchee/deoplete-clang'
-hook_source = '''
-let g:deoplete#sources#clang#libclang_path = '/usr/local/Cellar/llvm/HEAD-848dcbd/lib/libclang.dylib'
-let g:deoplete#sources#clang#clang_header = '/usr/local/Cellar/llvm/HEAD-848dcbd/lib/clang'
-'''
-on_ft = ['c', 'cpp', 'cmake']
+# [[plugins]]
+# repo = 'zchee/deoplete-clang'
+# hook_source = '''
+# let g:deoplete#sources#clang#libclang_path = '/usr/local/Cellar/llvm/HEAD-848dcbd/lib/libclang.dylib'
+# let g:deoplete#sources#clang#clang_header = '/usr/local/Cellar/llvm/HEAD-848dcbd/lib/clang'
+# '''
+# on_ft = ['c', 'cpp', 'cmake']
 
 [[plugins]]
 repo = 'jalvesaq/Nvim-R'
