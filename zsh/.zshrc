@@ -100,7 +100,7 @@ setopt no_flow_control
 setopt interactive_comments
 
 # ディレクトリ名だけでcdする
-setopt auto_cd
+# setopt auto_cd
 
 # cd したら自動的にpushdする
 setopt auto_pushd
@@ -127,7 +127,7 @@ setopt extended_glob
 setopt correct
 
 # 移動したディレクトリを記録して "cd -[Tab]" で履歴一覧
-setopt auto_pushd
+# setopt auto_pushd
 
 ########################################
 # キーバインド
@@ -208,6 +208,9 @@ fi
 zplug "zplug/zplug"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "seebi/dircolors-solarized"
+zplug "mafredri/zsh-async", from:github
+zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+zplug "b4b4r07/enhancd", use:init.sh
 
 # 未インストール項目をインストールする
 if ! zplug check --verbose; then
@@ -222,22 +225,22 @@ zplug load --verbose
 
 
 # poewrline-shell
-function powerline_precmd() {
-    PS1="$(powerline-shell --shell zsh $?)"
-}
-
-function install_powerline_precmd() {
-  for s in "${precmd_functions[@]}"; do
-    if [ "$s" = "powerline_precmd" ]; then
-      return
-    fi
-  done
-  precmd_functions+=(powerline_precmd)
-}
-
-if [ "$TERM" != "linux" ]; then
-    install_powerline_precmd
-fi
+# function powerline_precmd() {
+#     PS1="$(powerline-shell --shell zsh $?)"
+# }
+#
+# function install_powerline_precmd() {
+#   for s in "${precmd_functions[@]}"; do
+#     if [ "$s" = "powerline_precmd" ]; then
+#       return
+#     fi
+#   done
+#   precmd_functions+=(powerline_precmd)
+# }
+#
+# if [ "$TERM" != "linux" ]; then
+#     install_powerline_precmd
+# fi
 
 #######################################
 autoload -Uz zmv
