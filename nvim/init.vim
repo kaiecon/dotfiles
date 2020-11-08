@@ -4,9 +4,11 @@ filetype off
 let mapleader = "\<Space>"
 
 if has('nvim')
-  let g:python3_host_prog = '/usr/local/bin/python3'
+  let g:python3_host_prog = '/usr/bin/python'
   let g:python_host_prog = '/usr/local/bin/python2'
 endif
+
+let g:ale_disable_lsp = 1
 
 "" dein
 " パス設定
@@ -93,6 +95,32 @@ endfunction
 " Change file/rec command.
 call denite#custom#var('file/rec', 'command',
 \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
+
+""" Defx
+nnoremap <silent> <Leader>f :<C-u> Defx -buffer-name=defx `expand('%:p:h')` -search=`expand('%:p')`<CR>
+
+call defx#custom#option('_', {
+  \ 'winwidth': 40,
+  \ 'split': 'vertical',
+  \ 'direction': 'topleft',
+  \ 'show_ignored_files': 1,
+  \ 'buffer_name': 'exproler',
+  \ 'toggle': 1,
+  \ 'resume': 1,
+  \ 'columns': 'indent:git:icons:filename:mark',
+  \ })
+
+call defx#custom#column('git', 'indicators', {
+  \ 'Modified'  : '✹',
+  \ 'Staged'    : '✚',
+  \ 'Untracked' : '✭',
+  \ 'Renamed'   : '➜',
+  \ 'Unmerged'  : '═',
+  \ 'Ignored'   : '☒',
+  \ 'Deleted'   : '✖',
+  \ 'Unknown'   : '?'
+  \ })
 
 " " Add custom menus
 " let s:menus = {}
@@ -183,6 +211,7 @@ nmap ga <Plug>(EasyAlign)
 
 "" Options 
 set t_Co=256
+set nofoldenable
 set laststatus=2
 set clipboard+=unnamed 
 set number
@@ -201,7 +230,7 @@ set wildmode=longest:full,full
 set infercase
 set hlsearch!
 nnoremap <ESC><ESC> :noh<CR>
-if has('mac')
+if ( has('mac') || has('unix') )
   nnoremap ;  :
   nnoremap :  ;
   vnoremap ;  :

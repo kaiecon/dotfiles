@@ -4,11 +4,14 @@
 ########################################
 
 # # 環境変数
-export LANG=ja_JP.UTF-8
-export TERM=xterm-256color
+# export LANG=ja_JP.UTF-8
+export LANG=en_US.UTF-8
+# export TERM=screen-256color
+export EDITOR=nvim
 # export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
-export PATH=$PATH:$HOME/.local/bin # for powerline on WSL
+# export PATH=$PATH:$HOME/.local/bin # for powerline on WSL
 # export R_HOME=${~}
+export PIPENV_VENV_IN_PROJECT=1
 [ -z "$ld_library_path" ] && typeset -xT LD_LIBRARY_PATH ld_library_path
 [ -z "$cplus_include_path" ] && typeset -xT CPLUS_INCLUDE_PATH cplus_include_path
 typeset -U path ld_library_path cplus_include_path
@@ -246,11 +249,18 @@ zplug load --verbose
 autoload -Uz zmv
 
 # nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # tmux起動
 [[ -z "$TMUX" && ! -z "$PS1" ]] && tmux -f $XDG_CONFIG_HOME/tmux/.tmux.conf
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+# export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# for k8s
+[[ /usr/bin/kubectl ]] && source <(kubectl completion zsh)
+[[ /usr/bin/kubeadm ]] && source <(kubeadm completion zsh)
+[[ /usr/bin/helm  ]] && source <(helm completion zsh)
+[[ /usr/bin/minikube ]] && source <(minikube completion zsh)
+source /usr/share/nvm/init-nvm.sh

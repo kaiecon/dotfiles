@@ -98,6 +98,7 @@ repo = 'plasticboy/vim-markdown'
 on_ft = ['md', 'markdown']
 hook_add = '''
   let g:vim_markdown_conceal = 0
+  let g:vim_markdown_conceal_code_blocks = 0
 '''
 
 [[plugins]]
@@ -141,3 +142,6 @@ let g:vimtex_view_general_options = '-r @line @pdf @tex'
 repo = 'jalvesaq/Nvim-R'
 on_ft = ['R']
 
+[[plugins]]
+repo = 'posva/vim-vue'
+on_ft = ['vue']
