@@ -9,28 +9,6 @@ repo = 'easymotion/vim-easymotion'
 repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
-repo = 'dense-analysis/ale'
-hook_add = '''
-    let g:ale_fixers = {
-      \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-      \ 'python' : ['isort', 'black'],
-      \ 'javascript': ['eslint', 'prettier'],
-      \ 'vue': ['eslint', 'prettier'],
-      \ 'typescript': ['prettier'],
-      \ 'json': ['prettier'],
-      \ 'cpp': ['clang-format']
-      \ }
-    let g:ale_linters = {
-      \ 'python': ['flake8'],
-      \ 'javascript': ['eslint'],
-      \ 'typescript': ['eslint'],
-      \ 'json': ['jsonlint']
-      \ }
-    let g:ale_fix_on_save = 1
-    let g:ale_sign_column_always = 1
-'''
-
-[[plugins]]
 repo = 'suan/vim-instant-markdown'
 
 [[plugins]]
@@ -86,20 +64,26 @@ hook_add = '''
       \ 'filetype': 'LightlineFiletype',
       \ 'fileencoding': 'LightlineFileencoding',
       \ 'mode': 'LightlineMode',
-      \ 'cocstatus': 'coc#status'
+      \ 'cocstatus': 'coc#status',
+      \ 'currentfunction': 'CocCurrentFunction'
       \ }
     let g:lightline.component_expand = {
-      \ 'linter_checking': 'lightline#ale#checking',
-      \ 'linter_warnings': 'lightline#ale#warnings',
-      \ 'linter_errors': 'lightline#ale#errors',
-      \ 'linter_ok': 'lightline#ale#ok',
+      \ 'linter_warnings': 'lightline#coc#warnings',
+      \ 'linter_errors': 'lightline#coc#errors',
+      \ 'linter_ok': 'lightline#coc#ok',
+      \ 'status': 'lightline#coc#status'
       \ }
-    let g:lightline#ale#indicator_checking = "🤔"
-    let g:lightline#ale#indicator_warnings = "❗"
-    let g:lightline#ale#indicator_errors = "❌"
-    let g:lightline#ale#indicator_ok = "✅" 
+    "let g:lightline.component_expand = {
+    "  \ 'linter_checking': 'lightline#ale#checking',
+    "  \ 'linter_warnings': 'lightline#ale#warnings',
+    "  \ 'linter_errors': 'lightline#ale#errors',
+    "  \ 'linter_ok': 'lightline#ale#ok',
+    "  \ }
+    "let g:lightline#ale#indicator_checking = "🤔"
+    "let g:lightline#ale#indicator_warnings = "❗"
+    "let g:lightline#ale#indicator_errors = "❌"
+    "let g:lightline#ale#indicator_ok = "✅" 
     let g:lightline.component_type = {
-      \ 'linter_checking': 'left',
       \ 'linter_warnings': 'warning',
       \ 'linter_errors': 'error',
       \ 'linter_ok': 'left',
@@ -107,7 +91,7 @@ hook_add = '''
     let g:lightline.active = {
       \ 'left': [ [ 'mode', 'paste' ], 
       \           [ 'fugitive', 'readonly', 'filename', 'modified' ],
-      \           [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ] ]
+      \           [ 'coc_status', 'linter_errors', 'linter_warnings', 'linter_ok' ] ]
       \ }
     function! LightlineModified()
       return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
@@ -150,6 +134,9 @@ hook_add = '''
       return winwidth(0) > 60 ? lightline#mode() : ''
     endfunction
 '''
+
+[[plugins]]
+repo = 'josa42/vim-lightline-coc'
 
 [[plugins]]
 repo = 'thinca/vim-quickrun'
@@ -288,22 +275,8 @@ repo = 'kristijanhusak/defx-git'
 repo = 'neoclide/coc.nvim'
 build = 'yarn install --frozen-lockfile'
 hook_add = '''
-  " inoremap <silent><expr> <TAB>
-  "         \ pumvisible() ? "\<C-n>" :
-  "         \ <SID>check_back_space() ? "\<TAB>" :
-  "         \ coc#refresh()
-  " inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-  " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-  " function! s:check_back_space() abort
-  "   let col = col('.') - 1
-  "   return !col || getline('.')[col - 1]  =~# '\s'
-  " endfunction
-  " nmap <silent> gd <Plug>(coc-definition)
-  " nmap <silent> gy <Plug>(coc-type-definition)
-  " nmap <silent> gi <Plug>(coc-implementation)
-  " nmap <silent> gr <Plug>(coc-references)
   source $XDG_CONFIG_HOME/nvim/plugins/coc-config.vim
 '''
 
-[[plugins]]
-repo = 'maximbaz/lightline-ale'
+# [[plugins]]
+# repo = 'maximbaz/lightline-ale'

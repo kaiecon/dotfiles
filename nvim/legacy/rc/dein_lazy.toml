@@ -1,0 +1,34 @@
+[[plugins]]
+repo = 'mattn/emmet-vim'
+on_ft = 'html'
+hook_add = '''
+  let g:user_emmet_expandabbr_key = '<c-e>'
+  let g:user_emmet_settings = {
+    \  'variables': { 
+    \  'lang' : 'ja'
+    \  },
+    \ }
+'''
+
+[[plugins]]
+repo = 'elzr/vim-json'
+on_ft = 'json'
+hook_add = '''
+  let g:vim_json_syntax_conceal = 0
+'''
+
+[[plugins]]
+repo = 'plasticboy/vim-markdown'
+on_ft = ['md', 'markdown']
+hook_add = '''
+  let g:vim_markdown_conceal = 0
+  let g:vim_markdown_conceal_code_blocks = 0
+'''
+
+[[plugins]]
+repo = 'suan/vim-instant-markdown'
+on_ft = ['md', 'markdown']
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'

@@ -1,28 +1,30 @@
-# License : MIT
-# http://mollifier.mit-license.org/
+# # 環境変数は.profileに移動済み
+# インタラクティブシェル専用の設定のみを残す
+export SYSTEM_EDITOR=vim
+export DISABLE_AUTOUPDATER=1
 
-########################################
-
-# # 環境変数
-# export LANG=ja_JP.UTF-8
-export LANG=en_US.UTF-8
-# export TERM=screen-256color
-export EDITOR=nvim
-# export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
-# export PATH=$PATH:$HOME/.local/bin # for powerline on WSL
-# export R_HOME=${~}
-export PIPENV_VENV_IN_PROJECT=1
 [ -z "$ld_library_path" ] && typeset -xT LD_LIBRARY_PATH ld_library_path
 [ -z "$cplus_include_path" ] && typeset -xT CPLUS_INCLUDE_PATH cplus_include_path
 typeset -U path ld_library_path cplus_include_path
 
-path=(${HOME}/.local/bin(N-/) ${HOME}/.yarn/bin(N-/) ${HOME}/go/bin(N-/) $path)
-ld_library_path=(${HOME}/oss/boost_1_65_1/libs(N-/) $ld_library_path)
-cplus_include_path=(${HOME}/oss/boost_1_65_1/include(N-/) $cplus_include_path)
+path=(
+  ${HOME}/.local/bin(N-/)
+  ${HOME}/.yarn/bin(N-/)
+  ${HOME}/go/bin(N-/)
+  ${HOME}/.cargo/bin(N-/)
+  ${ANDROID_HOME}/cmdline-tools/latest/bin(N-/)
+  ${ANDROID_HOME}/platform-tools(N-/)
+  ${ANDROID_HOME}/emulator(N-/)
+  $path
+)
+# path+=(~/.jdks/openjdk-17.0.2/bin)
 
 # 色を使用出来るようにする
 autoload -Uz colors
 colors
+
+# Ctrl-x-e to edit command line
+autoload -Uz edit-command-line
 
 # emacs 風キーバインドにする
 bindkey -e
@@ -34,14 +36,6 @@ bindkey '[3~' delete-char
 HISTFILE=$XDG_DATA_HOME/.zsh_history
 HISTSIZE=10000000
 SAVEHIST=10000000
-
-# プロンプト
-# 1行表示
-# PROMPT="%~ %# "
-# 2行表示
-#PROMPT="%{${fg[green]}%}[%n@%m]%{${reset_color}%} %~
-#%# "
-
 
 # 単語の区切り文字を指定する
 autoload -Uz select-word-style
@@ -56,6 +50,7 @@ zstyle ':zle:*' word-style unspecified
 # 補完機能を有効にする
 #for zsh-completios
 fpath=(/usr/local/share/zsh-completions $fpath)
+fpath+=(~/.config/zsh/completion)
 autoload -Uz compinit
 compinit -u
 
@@ -72,7 +67,6 @@ zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin \
 # ps コマンドのプロセス名補完
 zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
 
-
 ########################################
 # vcs_info
 autoload -Uz vcs_info
@@ -87,7 +81,6 @@ RPROMPT="${vcs_info_msg_0_}"
 }
 add-zsh-hook precmd _update_vcs_info_msg
 
-
 ########################################
 # オプション
 # 日本語ファイル名を表示可能にする
@@ -101,9 +94,6 @@ setopt no_flow_control
 
 # '#' 以降をコメントとして扱う
 setopt interactive_comments
-
-# ディレクトリ名だけでcdする
-# setopt auto_cd
 
 # cd したら自動的にpushdする
 setopt auto_pushd
@@ -135,8 +125,14 @@ setopt correct
 ########################################
 # キーバインド
 
-# ^R で履歴検索をするときに * でワイルドカードを使用出来るようにする
-bindkey '^R' history-incremental-pattern-search-backward
+# fzf(sk) history
+function fzf-select-history() {
+    BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER" --reverse)
+    CURSOR=$#BUFFER
+    zle reset-prompt
+}
+zle -N fzf-select-history
+bindkey '^r' fzf-select-history
 
 ########################################
 # エイリアス
@@ -153,8 +149,6 @@ alias mkdir='mkdir -p'
 
 alias vi='vim'
 alias nv='nvim'
-# alias py='python'
-# alias py3='python3'
 
 # sudo の後のコマンドでエイリアスを有効にする
 alias sudo='sudo '
@@ -162,9 +156,6 @@ alias sudo='sudo '
 # グローバルエイリアス
 alias -g L='| less'
 alias -g G='| grep'
-
-# rでrを起動できるように
-disable r
 
 # C で標準出力をクリップボードにコピーする
 # mollifier delta blog : http://mollifier.hatenablog.com/entry/20100317/p1
@@ -174,6 +165,9 @@ if which pbcopy >/dev/null 2>&1 ; then
 elif which xsel >/dev/null 2>&1 ; then
     # Linux
     alias -g C='| xsel --input --clipboard'
+elif command -v xclip >/dev/null 2>&1 ; then
+    # Linux (xclip)
+    alias -g C='| xclip -selection clipboard'
 elif which putclip >/dev/null 2>&1 ; then
     # Cygwin
     alias -g C='| putclip'
@@ -185,8 +179,7 @@ case ${OSTYPE} in
     darwin*)
         #Mac用の設定
         export CLICOLOR=1
-        export PATH="/usr/local/sbin:$PATH"
-        export PATH="/usr/local/opt/llvm/bin:$PATH"
+        # PATHは.profileで管理
         alias ls='ls -G -F'
         ;;
       linux*)
@@ -226,41 +219,19 @@ fi
 # コマンドをリンクして、PATH に追加し、プラグインは読み込む
 zplug load --verbose
 
-
-# poewrline-shell
-# function powerline_precmd() {
-#     PS1="$(powerline-shell --shell zsh $?)"
-# }
-#
-# function install_powerline_precmd() {
-#   for s in "${precmd_functions[@]}"; do
-#     if [ "$s" = "powerline_precmd" ]; then
-#       return
-#     fi
-#   done
-#   precmd_functions+=(powerline_precmd)
-# }
-#
-# if [ "$TERM" != "linux" ]; then
-#     install_powerline_precmd
-# fi
-
 #######################################
 autoload -Uz zmv
-
-# nvm
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# tmux起動
-[[ -z "$TMUX" && ! -z "$PS1" ]] && tmux -f $XDG_CONFIG_HOME/tmux/.tmux.conf
-
-# export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 # for k8s
 [[ /usr/bin/kubectl ]] && source <(kubectl completion zsh)
 [[ /usr/bin/kubeadm ]] && source <(kubeadm completion zsh)
 [[ /usr/bin/helm  ]] && source <(helm completion zsh)
 [[ /usr/bin/minikube ]] && source <(minikube completion zsh)
+
+### awscli
+source /usr/bin/aws_zsh_completer.sh
+
+# PATH設定は.profileに移動済み
+
+# nvm
 source /usr/share/nvm/init-nvm.sh

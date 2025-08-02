@@ -1,0 +1,53 @@
+[general]
+live_config_reload = true
+
+[terminal.shell]
+# Launch tmux and attach/create the "main" session by default
+program = "/usr/bin/tmux"
+args = ["-u", "new-session", "-A", "-s", "main"]
+
+[colors.bright]
+black = "#686868"
+blue = "#5CCFE6"
+cyan = "#95E6CB"
+green = "#A6CC70"
+magenta = "#FFEE99"
+red = "#F27983"
+white = "#FFFFFF"
+yellow = "#FFCC66"
+
+[colors.normal]
+black = "#191E2A"
+blue = "#73D0FF"
+cyan = "#95E6CB"
+green = "#BAE67E"
+magenta = "#FFD580"
+red = "#FF3333"
+white = "#C7C7C7"
+yellow = "#FFA759"
+
+[colors.primary]
+background = "#202734"
+foreground = "#CBCCC6"
+
+[font]
+size = 14
+
+[font.bold]
+family = "HackGenConsoleNF"
+
+[font.italic]
+family = "HackGenConsoleNF"
+
+[font.normal]
+family = "HackGenConsoleNF"
+style = "Regular"
+
+[window]
+opacity = 0.8
+
+[env]
+TERM = "alacritty"
+ALACRITTY = "1"
+LANG = "en_US.UTF-8"   # 例: 必要なら ja_JP.UTF-8
+LC_CTYPE = "en_US.UTF-8"

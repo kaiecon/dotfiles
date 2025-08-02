@@ -3,3 +3,4 @@ nvim/dict
 nvim/.netrwhist
 nvim/doc/*
 zsh/.zcompdump
+zsh/completion
